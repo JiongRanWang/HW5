@@ -77,8 +77,8 @@ z = seq(0, 15, length.out = 100)
 fits = llr(z = z, x = x, y = y, omega = 2)
 
 # plot the data and the smoother
-plot(x, y)
-lines(z, fits, col = 'red')
+#plot(x, y)
+#lines(z, fits, col = 'red')
 
 
 # --- example 2 --- #
@@ -94,5 +94,5 @@ z = seq(-2 * pi, 2 * pi, length.out = 100)
 fits = llr(z = z, x = x, y = y, omega = pi / 3)
 
 # plot the data and the smoother
-plot(x, y)
-lines(z, fits, col = 'red')
+#plot(x, y)
+#lines(z, fits, col = 'red')
