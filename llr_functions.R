@@ -23,9 +23,14 @@ llr = function(x, y, z, omega) {
 compute_f_hat = function(z, x, y, omega) {
   Wz = make_weight_matrix(z, x, omega)
   X = make_predictor_matrix(x)
-  f_hat = c(1, z) %*% solve(t(X) %*% Wz %*% X) %*% t(X) %*% Wz %*% y
+  X.new= cbind(X,Wz)
+  Y.new= cbind(y,Wz)
+  #f_hat = c(1, z) %*% solve(t(X) %*% Wz %*% X) %*% t(X) %*% Wz %*% y
+  f_hat = c(1, z) %*% solve(t(X) %*% t(apply(X.new,1,function(s) s[1:2]*s[3]))) %*% t(X) %*% 
+    apply(Y.new,1,function(s) s[1]*s[2])
   return(f_hat)
 }
+
 
 #' @param z (numeric) must be a scalar
 #' @param x (numeric) vector of arbitrary length
@@ -34,8 +39,7 @@ compute_f_hat = function(z, x, y, omega) {
 make_weight_matrix = function(z, x, omega) {
   r = abs(x - z) / omega  # this is a vector of the same length as x
   w = sapply(r, W)  # this is a vector of the same length as x and r
-  Wz = diag(w)  # this is a diagonal matrix with elements from w
-  return(Wz)
+  return(w)
 }
 
 #' @param r (numeric) must be a scalar
